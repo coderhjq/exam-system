@@ -1,20 +1,10 @@
 # online_exam考试系统 
-[![star](https://gitee.com/wzhouzhou/exam_system/badge/star.svg?theme=dark)](https://gitee.com/wzhouzhou/exam_system/stargazers)[![fork](https://gitee.com/wzhouzhou/exam_system/badge/fork.svg?theme=white)](https://gitee.com/wzhouzhou/exam_system/members)
+online_exam考试系统是一个多角色在线培训考试系统，系统集成了用户管理、角色管理、题库管理、试题管理、考试管理、在线考试等功能，考试流程完善。实现一整套完整体系的考试系统，方便用户在此系统中进行练习并不断提升自己，在考试中不断进步。
 
-[![Fork me on Gitee](https://gitee.com/wzhouzhou/exam_system/widgets/widget_4.svg?color=d716f0)](https://gitee.com/wzhouzhou/exam_system)
-
-online_exam考试系统是一个多角色在线培训考试系统，系统集成了用户管理、角色管理、题库管理、试
-
-题管理、考试管理、在线考试等功能，考试流程完善。实现一整套完整体系的考试系统，方便用
-
-户在此系统中进行练习并不断提升自己，在考试中不断进步。
-
-- # [ :point_right: 线上体验](http://exam.wzzz.fun)
 ``` 
    管理员账号: hujiaqi 
    密码: 123456
 ```
-
 ## 技术栈
 
 > 1. SpringBoot
