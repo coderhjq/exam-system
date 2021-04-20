@@ -10,9 +10,9 @@ online_exam考试系统是一个多角色在线培训考试系统，系统集成
 户在此系统中进行练习并不断提升自己，在考试中不断进步。
 
 `请务必将文档看完, 很多问题都可以在文档中找到解决, 也可以加入群一起交流, 群号: 970804317 下面也会有二维码`
-- # [ :point_right: 线上体验](http://exam.wzzz.fun)
+- # [ :point_right: 线上体验](http://exam.hjqz.fun)
 ``` 
-   管理员账号: wzz 
+   管理员账号: hjq 
    密码: 12345
    Tips: 为了各位有良好的体验,请不要更改演示账号的权限以及地址, 如账号异常,请加q群970804317私信群主~!
 ```
@@ -23,9 +23,9 @@ online_exam考试系统是一个多角色在线培训考试系统，系统集成
 
 - 2020/11/14 更新:
 
-    1. 网易云音乐线上体验地址: [http://music.wzzz.fun](http://music.wzzz.fun/)
-    2. 博客系统线上体验地址: [http://blog.wzzz.fun](http://blog.wzzz.fun/)   (账号:wzz 密码:111)
-    3. 考试系统线上体验地址: [http://exam.wzzz.fun](http://exam.wzzz.fun/)  (账号:wzz 密码:12345)
+    1. 网易云音乐线上体验地址: [http://music.hjqz.fun](http://music.hjqz.fun/)
+    2. 博客系统线上体验地址: [http://blog.hjqz.fun](http://blog.hjqz.fun/)   (账号:hjq 密码:111)
+    3. 考试系统线上体验地址: [http://exam.hjqz.fun](http://exam.hjqz.fun/)  (账号:hjq 密码:12345)
 
 - 为了各位有良好的体验,请不要更改演示账号的权限以及密码
 
@@ -176,9 +176,9 @@ npm run serve #启动项目服务
 
 ## 推荐
 
-[SpringBoot个人博客](https://github.com/wzz1206414629/privateBlog)
+[SpringBoot个人博客](https://github.com/hjq1206414629/privateBlog)
 
-[高仿网易云音乐](https://gitee.com/wzhouzhou/vue_wzz_cloudMusic)
+[高仿网易云音乐](https://gitee.com/wzhouzhou/vue_hjq_cloudMusic)
 
 ## 问题
 

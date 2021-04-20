@@ -8,7 +8,7 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.wzz</groupId>
+    <groupId>com.hjq</groupId>
     <artifactId>exam-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>exam-admin</name>

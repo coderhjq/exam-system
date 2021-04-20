@@ -153,7 +153,7 @@ CREATE TABLE `notice` (
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES ('1', '<ul><li><font color=\"#c24f4a\">2020/11/14 更新:</font></li><ol><li>网易云音乐线上体验地址:&nbsp;<a href=\"http://music.wzzz.fun/\" target=\"_blank\">http://music.wzzz.fun</a></li><li>博客系统线上体验地址:&nbsp;<a href=\"http://blog.wzzz.fun/\" target=\"_blank\">http://blog.wzzz.fun</a>&nbsp;&nbsp;<span style=\"background-color: rgb(249, 150, 59);\">(账号:wzz 密码:111)</span></li><li>考试系统线上体验地址:&nbsp;<a href=\"http://exam.wzzz.fun/\" target=\"_blank\">http://exam.wzzz.fun</a>&nbsp;<span style=\"background-color: rgb(249, 150, 59);\">(账号:wzz 密码:12345)</span></li></ol><p><span style=\"background-color: rgb(249, 150, 59);\">为了各位有良好的体验,请不要更改演示账号的权限以及密码</span></p></ul><hr/><ul><li><span style=\"color: rgb(194, 79, 74); text-align: initial;\">2021/02/07更新:</span></li></ul><ul><ol><li>注册验证码校验</li><li>主页面小屏样式更改</li><li>题库训练弹窗在小屏样式调整</li><li>修复添加考试时选择需要密码权限时,密码为空的情况</li><li>修复更新考试时选择需要密码权限时,密码为空的情况</li><li><font color=\"#f9963b\" style=\"background-color: rgb(238, 236, 224);\">新增</font><font color=\"#f9963b\" style=\"\"><span style=\"background-color: rgb(139, 170, 74);\">公告</span><span style=\"background-color: rgb(238, 236, 224);\">功能</span></font>(管理员可改,其他用户可以查看公告)</li><li>修复考试提交试卷业务逻辑BUG</li></ol></ul><hr/><ul><li><font color=\"#c24f4a\">2021/02/08更新:</font><br/></li><ol><li><span style=\"background-color: rgb(249, 150, 59);\">新增测验通过之后的</span><span style=\"background-color: rgb(139, 170, 74);\">发放证书</span><span style=\"background-color: rgb(249, 150, 59);\">功能 (我的成绩模块中)</span></li><li>&nbsp;考试多选题结果数据过滤逻辑优化</li></ol></ul>', '2021-02-07 15:52:45', '2021-02-08 14:10:45', '1');
+INSERT INTO `notice` VALUES ('1', '<ul><li><font color=\"#c24f4a\">2020/11/14 更新:</font></li><ol><li>网易云音乐线上体验地址:&nbsp;<a href=\"http://music.hjqz.fun/\" target=\"_blank\">http://music.hjqz.fun</a></li><li>博客系统线上体验地址:&nbsp;<a href=\"http://blog.hjqz.fun/\" target=\"_blank\">http://blog.hjqz.fun</a>&nbsp;&nbsp;<span style=\"background-color: rgb(249, 150, 59);\">(账号:hjq 密码:111)</span></li><li>考试系统线上体验地址:&nbsp;<a href=\"http://exam.hjqz.fun/\" target=\"_blank\">http://exam.hjqz.fun</a>&nbsp;<span style=\"background-color: rgb(249, 150, 59);\">(账号:hjq 密码:12345)</span></li></ol><p><span style=\"background-color: rgb(249, 150, 59);\">为了各位有良好的体验,请不要更改演示账号的权限以及密码</span></p></ul><hr/><ul><li><span style=\"color: rgb(194, 79, 74); text-align: initial;\">2021/02/07更新:</span></li></ul><ul><ol><li>注册验证码校验</li><li>主页面小屏样式更改</li><li>题库训练弹窗在小屏样式调整</li><li>修复添加考试时选择需要密码权限时,密码为空的情况</li><li>修复更新考试时选择需要密码权限时,密码为空的情况</li><li><font color=\"#f9963b\" style=\"background-color: rgb(238, 236, 224);\">新增</font><font color=\"#f9963b\" style=\"\"><span style=\"background-color: rgb(139, 170, 74);\">公告</span><span style=\"background-color: rgb(238, 236, 224);\">功能</span></font>(管理员可改,其他用户可以查看公告)</li><li>修复考试提交试卷业务逻辑BUG</li></ol></ul><hr/><ul><li><font color=\"#c24f4a\">2021/02/08更新:</font><br/></li><ol><li><span style=\"background-color: rgb(249, 150, 59);\">新增测验通过之后的</span><span style=\"background-color: rgb(139, 170, 74);\">发放证书</span><span style=\"background-color: rgb(249, 150, 59);\">功能 (我的成绩模块中)</span></li><li>&nbsp;考试多选题结果数据过滤逻辑优化</li></ol></ul>', '2021-02-07 15:52:45', '2021-02-08 14:10:45', '1');
 INSERT INTO `notice` VALUES ('4', '<p>发布公告测试<br/></p>', '2021-02-07 17:02:07', '2021-02-07 17:05:13', '0');
 
 -- ----------------------------
@@ -177,19 +177,19 @@ CREATE TABLE `question` (
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('3', '实现web后端的语言', '2020-10-24 16:30:08', 'wzz', '4', '2', null, '1,2,5', '小学数学题库,生活小常识,java开发', '解析');
-INSERT INTO `question` VALUES ('6', '以下哪些语言是必修课', '2020-11-02 10:11:28', 'wzz', '2', '1', null, '1,5', '小学数学题库,java开发', '语文 数学 英语');
-INSERT INTO `question` VALUES ('8', '说说小学是什么样的?', '2020-11-02 10:12:02', 'wzz', '4', '3', null, '1,5', '小学数学题库,java开发', '说亲身经历即可');
-INSERT INTO `question` VALUES ('11', '1-1', '2020-10-27 14:35:33', 'wzz', '1', '1', null, '1,5', '小学数学题库,java开发', '0');
-INSERT INTO `question` VALUES ('12', '8+8', '2020-10-27 15:32:44', 'wzz', '1', '3', null, '1,5', '小学数学题库,java开发', '16');
-INSERT INTO `question` VALUES ('13', '1 * 9', '2020-10-27 15:13:38', 'wzz', '1', '1', null, '1,5', '小学数学题库,java开发', '9');
-INSERT INTO `question` VALUES ('14', '2+2', '2020-10-27 16:17:09', 'wzz', '1', '1', 'https://wangsiryun.oss-cn-beijing.aliyuncs.com/images/upload/2020-10-27/e4f71d9b67b4a15ce2ec638c908b00dc506ab.png', '1,5', '小学数学题库,java开发', '4');
-INSERT INTO `question` VALUES ('15', '9+9', '2020-10-27 15:53:14', 'wzz', '1', '1', 'https://wangsiryun.oss-cn-beijing.aliyuncs.com/images/upload/2020-10-27/47ccdd9b67b4a15ce2ec638c908b00dc506ab.png', '1,5', '小学数学题库,java开发', '18');
-INSERT INTO `question` VALUES ('18', '最接近0的两个数', '2020-11-02 10:09:13', 'wzz', '2', '2', null, '1', '小学数学题库', '1和2');
-INSERT INTO `question` VALUES ('19', '1是不是奇数', '2020-10-31 14:54:09', 'wzz', '3', '1', null, '1', '小学数学题库', '是');
-INSERT INTO `question` VALUES ('20', '9是奇数还是偶数', '2020-11-02 10:21:19', 'wzz', '3', '1', null, '1', '小学数学题库', '奇数');
-INSERT INTO `question` VALUES ('21', '哪几个是三位数', '2020-11-05 14:42:56', 'wzz', '2', '1', null, '1,2', '小学数学题库,生活小常识', '数数');
-INSERT INTO `question` VALUES ('22', '测试', '2020-12-27 21:03:31', 'wzz', '1', '1', null, '2', '生活小常识', '测试');
+INSERT INTO `question` VALUES ('3', '实现web后端的语言', '2020-10-24 16:30:08', 'hjq', '4', '2', null, '1,2,5', '小学数学题库,生活小常识,java开发', '解析');
+INSERT INTO `question` VALUES ('6', '以下哪些语言是必修课', '2020-11-02 10:11:28', 'hjq', '2', '1', null, '1,5', '小学数学题库,java开发', '语文 数学 英语');
+INSERT INTO `question` VALUES ('8', '说说小学是什么样的?', '2020-11-02 10:12:02', 'hjq', '4', '3', null, '1,5', '小学数学题库,java开发', '说亲身经历即可');
+INSERT INTO `question` VALUES ('11', '1-1', '2020-10-27 14:35:33', 'hjq', '1', '1', null, '1,5', '小学数学题库,java开发', '0');
+INSERT INTO `question` VALUES ('12', '8+8', '2020-10-27 15:32:44', 'hjq', '1', '3', null, '1,5', '小学数学题库,java开发', '16');
+INSERT INTO `question` VALUES ('13', '1 * 9', '2020-10-27 15:13:38', 'hjq', '1', '1', null, '1,5', '小学数学题库,java开发', '9');
+INSERT INTO `question` VALUES ('14', '2+2', '2020-10-27 16:17:09', 'hjq', '1', '1', 'https://wangsiryun.oss-cn-beijing.aliyuncs.com/images/upload/2020-10-27/e4f71d9b67b4a15ce2ec638c908b00dc506ab.png', '1,5', '小学数学题库,java开发', '4');
+INSERT INTO `question` VALUES ('15', '9+9', '2020-10-27 15:53:14', 'hjq', '1', '1', 'https://wangsiryun.oss-cn-beijing.aliyuncs.com/images/upload/2020-10-27/47ccdd9b67b4a15ce2ec638c908b00dc506ab.png', '1,5', '小学数学题库,java开发', '18');
+INSERT INTO `question` VALUES ('18', '最接近0的两个数', '2020-11-02 10:09:13', 'hjq', '2', '2', null, '1', '小学数学题库', '1和2');
+INSERT INTO `question` VALUES ('19', '1是不是奇数', '2020-10-31 14:54:09', 'hjq', '3', '1', null, '1', '小学数学题库', '是');
+INSERT INTO `question` VALUES ('20', '9是奇数还是偶数', '2020-11-02 10:21:19', 'hjq', '3', '1', null, '1', '小学数学题库', '奇数');
+INSERT INTO `question` VALUES ('21', '哪几个是三位数', '2020-11-05 14:42:56', 'hjq', '2', '1', null, '1,2', '小学数学题库,生活小常识', '数数');
+INSERT INTO `question` VALUES ('22', '测试', '2020-12-27 21:03:31', 'hjq', '1', '1', null, '2', '生活小常识', '测试');
 
 -- ----------------------------
 -- Table structure for question_bank
@@ -227,7 +227,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '3', 'wzz', '王周舟', '9499273223c7aca5949e3055eaa57f6f', 'c667d6', '1', '2020-10-22 15:05:15');
+INSERT INTO `user` VALUES ('1', '3', 'hjq', '王周舟', '9499273223c7aca5949e3055eaa57f6f', 'c667d6', '1', '2020-10-22 15:05:15');
 INSERT INTO `user` VALUES ('2', '1', 'w', '学生王某', '9499273223c7aca5949e3055eaa57f6f', 'c667d6', '1', '2020-10-22 10:46:25');
 INSERT INTO `user` VALUES ('3', '2', 'zz', '教师', 'c45cd81a5f4f205bc6f5fbec7f42faaa', '304cba', '1', '2020-10-22 11:10:12');
 INSERT INTO `user` VALUES ('4', '1', 'lx', '刘熙', '98d4fa4da534339cbed32b62d7b246c7', 'ccb14b', '1', '2020-10-22 18:13:20');

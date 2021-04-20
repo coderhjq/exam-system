@@ -41,7 +41,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.wzz.entity
+  type-aliases-package: com.hjq.entity
   configuration:
     # 配置日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
