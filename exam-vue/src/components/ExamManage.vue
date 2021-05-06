@@ -25,8 +25,7 @@
       <el-input v-model="queryInfo.examName" placeholder="考试名称" @blur="getExamInfo"
                 style="margin-left: 5px;width: 220px"
                 prefix-icon="el-icon-search"></el-input>
-      <br>
-      <el-button type="primary" icon="el-icon-plus" style="margin-top: 10px"
+      <el-button type="primary" icon="el-icon-plus"
                  @click="$router.push('/addExam')">添加
       </el-button>
     </el-header>
@@ -70,7 +69,7 @@
         <el-table-column align="center" label="考试时间">
           <template slot-scope="scope">
             {{ scope.row.startTime !== 'null' && scope.row.endTime !== 'null' ?
-            scope.row.startTime + ' ~' + scope.row.endTime : '不限时'}}
+            scope.row.startTime +'~' +scope.row.endTime : '不限时'}}
           </template>
         </el-table-column>
 
@@ -270,4 +269,7 @@
       opacity: 1;
     }
   }
+.el-button{
+  float: right;
+}
 </style>

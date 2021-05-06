@@ -102,7 +102,9 @@ let API = {
     //更新公告
     updateNotice: '/admin/updateNotice',
     //获取专属证书
-    getCertificate: '/student/getCertificate'
+    getCertificate: '/student/getCertificate',
+    //判断作弊
+    updateStatus: '/teacher/updateStatus',
   },
 }
 

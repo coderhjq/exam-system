@@ -89,6 +89,7 @@
 
       </el-card>
       <el-button size="small" style="margin-top: 25px" type="primary" @click="uploadMarkExam">提交阅卷</el-button>
+      <el-button size="small" style="margin-top: 25px" type="primary" @click="cheat" id="changeCheat">判为作弊</el-button>
     </el-main>
 
     <!--图片回显-->
@@ -244,7 +245,20 @@
             this.$router.push('/markManage')
           }
         })
-      }
+      },
+      //设置作弊
+      cheat(){
+        console.log(this.examRecord.recordId);
+        let data=this.examRecord.recordId;
+        this.$http.post(this.API.updateStatus,{recordId:data}).then((resp) => {
+          console.log(resp);
+          if (resp.data.code === 200) {
+            document.getElementById("changeCheat").display="none";
+            alert(resp.data.message);
+          }
+        })
+      },
+
     }
   }
 </script>

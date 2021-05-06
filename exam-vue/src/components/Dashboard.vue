@@ -1,7 +1,9 @@
 <template>
+
   <div>
+
     <h1 class="title">
-      <a href="https://gitee.com/wzhouzhou/exam_system" target="_blank">online_exam考试系统</a>
+      <a href="#" target="_blank">online_exam考试系统</a>
     </h1>
 
     <el-row>
@@ -49,8 +51,8 @@
 
       </el-col>
     </el-row>
-
   </div>
+
 </template>
 
 <script>
@@ -92,4 +94,5 @@
   a {
     text-decoration: none
   }
+
 </style>

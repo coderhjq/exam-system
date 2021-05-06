@@ -41,7 +41,7 @@
     </el-main>
 
     <el-footer>
-      <span>&copy;2021-2021 Power By HJQ</span>
+      <span>&copy;2021-2021 Power By hjq</span>
     </el-footer>
   </el-container>
 </template>

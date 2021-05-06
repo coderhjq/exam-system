@@ -175,14 +175,16 @@
           <el-form-item label="考试开始时间" prop="startTime">
             <el-date-picker style="margin-left: 5px"
                             v-model="examInfo.startTime"
-                            type="date" placeholder="考试开始时间">
+                            type="datetime" placeholder="考试开始时间"
+                            value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm:ss">
             </el-date-picker>
           </el-form-item>
 
           <el-form-item label="考试结束时间" prop="endTime">
             <el-date-picker style="margin-left: 5px"
                             v-model="examInfo.endTime"
-                            type="date" placeholder="考试结束时间">
+                            type="datetime" placeholder="考试结束时间"
+                            value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm:ss">
             </el-date-picker>
           </el-form-item>
 

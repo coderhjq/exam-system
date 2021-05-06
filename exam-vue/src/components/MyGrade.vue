@@ -12,10 +12,7 @@
         </el-option>
       </el-select>
 
-      <el-alert center show-icon
-                title="新增查看证书功能，通过测评即可获得online_exam考试系统颁发的专属证书！"
-                type="warning">
-      </el-alert>
+
 
     </el-header>
 
@@ -44,8 +41,6 @@
 
             <div v-if="isOrNotPassExam(scope.row)">
               <span style="color: limegreen">通过</span>
-              |
-              <el-button type="text" @click="getCertificate(scope.row.recordId,scope.row.examName)">查看证书</el-button>
             </div>
 
             <span v-if="!isOrNotPassExam(scope.row)" style="color: red">未通过</span>
@@ -245,44 +240,44 @@
         this.bigImgDialog = true
       },
       // 获取专属证书
-      getCertificate (recordId, examName) {
-        this.loadingCertificate = true
-        this.$http({
-          url: this.API.getCertificate,
-          method: 'get',
-          responseType: 'arraybuffer',   //一定要设置响应类型，否则页面会是空白pdf
-          params: {
-            'examRecordId': recordId,
-            'examName': examName
-          }
-        }).then(res => {
-          if (res.status === 200) {// 证书获取成功
-            const binaryData = []
-            binaryData.push(res.data)
-            //获取blob链接
-            this.pdfUrl = window.URL.createObjectURL(new Blob(binaryData, { type: 'application/pdf' }))
-            // 证书创建完毕,动画结束
-            this.loadingCertificate = false
-            window.open(this.pdfUrl)
-          } else {
-            this.$notify({
-              title: 'Tips',
-              message: '证书获取失败,请稍后再试',
-              type: 'error',
-              duration: 2000
-            })
-            this.loadingCertificate = false
-          }
-        }).catch((res) => {
-          this.$notify({
-            title: 'Tips',
-            message: '证书获取失败,请稍后再试',
-            type: 'error',
-            duration: 2000
-          })
-          this.loadingCertificate = false
-        })
-      }
+      // getCertificate (recordId, examName) {
+      //   this.loadingCertificate = true
+      //   this.$http({
+      //     url: this.API.getCertificate,
+      //     method: 'get',
+      //     responseType: 'arraybuffer',   //一定要设置响应类型，否则页面会是空白pdf
+      //     params: {
+      //       'examRecordId': recordId,
+      //       'examName': examName
+      //     }
+      //   }).then(res => {
+      //     if (res.status === 200) {// 证书获取成功
+      //       const binaryData = []
+      //       binaryData.push(res.data)
+      //       //获取blob链接
+      //       this.pdfUrl = window.URL.createObjectURL(new Blob(binaryData, { type: 'application/pdf' }))
+      //       // 证书创建完毕,动画结束
+      //       this.loadingCertificate = false
+      //       window.open(this.pdfUrl)
+      //     } else {
+      //       this.$notify({
+      //         title: 'Tips',
+      //         message: '证书获取失败,请稍后再试',
+      //         type: 'error',
+      //         duration: 2000
+      //       })
+      //       this.loadingCertificate = false
+      //     }
+      //   }).catch((res) => {
+      //     this.$notify({
+      //       title: 'Tips',
+      //       message: '证书获取失败,请稍后再试',
+      //       type: 'error',
+      //       duration: 2000
+      //     })
+      //     this.loadingCertificate = false
+      //   })
+      // }
     },
     computed: {
       //是否通过考试

@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -276,8 +277,11 @@ public class TeacherController {
     })
     public CommonResult<String> uploadQuestionImage(MultipartFile file) throws Exception {
         log.info("执行了===>TeacherController中的uploadQuestionImage方法");
+        System.out.println ("++++++++++++++++++++++");
         System.out.println(file.getOriginalFilename());
+        System.out.println ("++++++++++++++++++++++");
         String url = OSSUtil.picOSS(file);
+        System.out.println (url);
         return new CommonResult<>(200, "上传成功", url);
     }
 
@@ -294,7 +298,12 @@ public class TeacherController {
         log.info("执行了===>TeacherController中的addQuestion方法");
         //查询所有的问题,然后就可以设置当前问题的id了
         List<Question> qus = questionService.list(new QueryWrapper<>());
-        Integer currentQuId = qus.get(qus.size() - 1).getId() + 1;
+        Integer currentQuId=0;
+        if(qus.isEmpty ())
+            currentQuId=1;
+        else {
+            currentQuId = qus.get(qus.size() - 1).getId() + 1;
+        }
         Question question = new Question();
         //设置基础字段
         question.setQuType(questionVo.getQuestionType());
@@ -764,14 +773,20 @@ public class TeacherController {
         if (examQueryVo.getExamType() != null) wrapper.eq("type", examQueryVo.getExamType());
         if (examQueryVo.getExamName() != null) wrapper.like("exam_name", examQueryVo.getExamName());
         if (examQueryVo.getStartTime() != null) {
-            wrapper.gt("start_time", examQueryVo.getStartTime().substring(0, examQueryVo.getStartTime().indexOf("T")));
+            wrapper.gt("start_time", examQueryVo.getStartTime());  //.substring(0, examQueryVo.getStartTime().indexOf("T"))
         }
+
         if (examQueryVo.getEndTime() != null) {
-            wrapper.lt("end_time", examQueryVo.getEndTime().substring(0, examQueryVo.getEndTime().indexOf("T")));
+            wrapper.lt("end_time", examQueryVo.getEndTime());   //.substring(0, examQueryVo.getEndTime().indexOf("T"))
         }
         IPage<Exam> page = examService.page(examIPage, wrapper);
 
         List<Exam> exams = page.getRecords();
+
+        for (Exam exam : exams) {
+            System.out.println (exam.getEndTime ());
+            System.out.println (exam.getStartTime ());
+        }
 
         return new CommonResult<>(200, "查询考试信息成功", exams);
     }
@@ -827,10 +842,18 @@ public class TeacherController {
         log.info("执行了===>TeacherController中的addExamByBank方法");
 
         Exam exam = new Exam();
+        System.out.println (addExamByBankVo.getEndTime());
+        System.out.println (addExamByBankVo.getStartTime());
         exam.setStatus(addExamByBankVo.getStatus());
         exam.setDuration(addExamByBankVo.getExamDuration());
         if (addExamByBankVo.getEndTime() != null)
             exam.setEndTime(addExamByBankVo.getEndTime());
+
+//        System.out.println ("*********************");
+//        System.out.println (addExamByBankVo.getEndTime());
+//        System.out.println (addExamByBankVo.getStartTime());
+//        System.out.println ("*********************");
+
         if (addExamByBankVo.getStartTime() != null)
             exam.setStartTime(addExamByBankVo.getStartTime());
         exam.setExamDesc(addExamByBankVo.getExamDesc());
@@ -916,6 +939,12 @@ public class TeacherController {
             exam.setEndTime(addExamByQuestionVo.getEndTime());
         if (addExamByQuestionVo.getStartTime() != null)
             exam.setStartTime(addExamByQuestionVo.getStartTime());
+
+//        System.out.println ("+++++++++++++");
+//        System.out.println (addExamByQuestionVo.getEndTime());
+//        System.out.println (addExamByQuestionVo.getStartTime());
+//        System.out.println ("+++++++++++");
+
         exam.setExamDesc(addExamByQuestionVo.getExamDesc());
         exam.setExamName(addExamByQuestionVo.getExamName());
         exam.setDuration(addExamByQuestionVo.getExamDuration());
@@ -936,6 +965,11 @@ public class TeacherController {
         examQuestion.setExamId(id);
         examQuestion.setScores(addExamByQuestionVo.getScores());
         examQuestion.setQuestionIds(addExamByQuestionVo.getQuestionIds());
+
+        System.out.println ("-------------");
+        System.out.println (exam.getStartTime ());
+        System.out.println (exam.getEndTime ());
+        System.out.println ("-------------");
 
         examService.save(exam);
         examQuestionService.save(examQuestion);
@@ -1084,6 +1118,7 @@ public class TeacherController {
 
         System.out.println(examRecord);
         examRecord.setExamTime(new Date());
+        examRecord.setStatus (1);
         examRecordService.save(examRecord);
         return new CommonResult<>(200, "考试记录保存成功", id);
     }
@@ -1200,7 +1235,11 @@ public class TeacherController {
     })
     public CommonResult<String> setObjectQuestionScore(Integer totalScore, Integer examRecordId) {
         ExamRecord examRecord = examRecordService.getOne(new QueryWrapper<ExamRecord>().eq("record_id", examRecordId));
-        examRecord.setTotalScore(totalScore);
+        if (2 == examRecord.getStatus ()){  //如果作弊成绩为0
+            examRecord.setTotalScore (0);
+        }else {
+            examRecord.setTotalScore(totalScore);
+        }
         boolean flag = examRecordService.update(examRecord, new UpdateWrapper<ExamRecord>().eq("record_id", examRecordId));
         return flag ? new CommonResult<>(200, "批阅成功") : new CommonResult<>(233, "批阅失败");
     }
@@ -1270,5 +1309,30 @@ public class TeacherController {
         list.add(res1.substring(1, res1.length() - 1).replaceAll(" ", ""));
         list.add(res2.substring(1, res2.length() - 1).replaceAll(" ", ""));
         return new CommonResult<>(200, "考试次数获取成功", list);
+    }
+
+    /**
+     *
+     * @param data
+     * @return
+     */
+    @PostMapping("/updateStatus")
+    @ApiOperation("修改学生作弊状态位")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "recordId", value = "考试记录id", required = true, dataType = "int", paramType = "query")
+    })
+    public CommonResult<List<String>> updateStatus(@RequestBody Map<String, Integer> data){
+        Integer recordId = data.get ("recordId");
+        System.out.println ("------------");
+        System.out.println (recordId);
+        ExamRecord record = examRecordService.getOne(new QueryWrapper<ExamRecord>().eq("record_id", recordId));
+        if (2 == record.getStatus ()){
+            return new CommonResult<> (200, "已设置，请勿重复点击");
+        }
+        record.setStatus (2);   //作弊状态
+        record.setTotalScore (0);   //总分置为0
+        examRecordService.update (record, new UpdateWrapper<ExamRecord>().eq("record_id", record.getRecordId ()));
+        //examService.update(exam, new UpdateWrapper<Exam>().eq("exam_id", exam.getExamId()));
+        return new CommonResult<> (200, "设置成功");
     }
 }

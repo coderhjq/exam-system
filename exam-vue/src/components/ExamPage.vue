@@ -28,6 +28,8 @@
                 <span v-else-if="questionInfo[curIndex].questionType === 3">【判断题】</span>
                 <span v-else>【简答题】</span>
                 <span>{{ questionInfo[curIndex].questionContent}}:</span>
+<!--                <audio ref="audio" :src="file_path" controls="controls" hidden id="myAudio"></audio>-->
+<!--                <button id="bf" @click="play()">播放听力</button>-->
               </div>
               <!--题目中的配图-->
               <img v-for="url in questionInfo[curIndex].images" :src="url" title="点击查看大图" alt="题目图片"
@@ -194,6 +196,8 @@
         takePhotoUrl: [],
         //摄像头是否开启
         cameraOn: false,
+        //跳出页面次数
+        exitTime: 0,
       }
     },
     created () {
@@ -250,8 +254,27 @@
           }
         }
       }
+      let exitTime=0;
+      document.addEventListener('visibilitychange',function(e){
+        // console.log(document.visibilityState);
+        let state = document.visibilityState
+        if(state == 'hidden'){
+          console.log(document.visibilityState,'用户离开了');
+          exitTime++;
+          this.exitTime=exitTime;
+        }
+        if(state == 'visible'){
+          console.log(document.visibilityState,'回来了');
+        }
+      })
+
     },
     methods: {
+      // play(){
+      //     var vid = document.getElementById("myAudio");//获取音频对象
+      //     document.getElementById("bf").disabled = true;;
+      //     vid.play();//启动音频，用于第一次启动
+      // },
       //查询当前考试的信息
       getExamInfo () {
         this.$http.get(this.API.getExamInfoById, { params: this.$route.params }).then((resp) => {
@@ -378,7 +401,10 @@
       },
       //将摄像头截图的base64串转化为file提交后台
       base64ToFile (urlData, fileName) {
-        let arr = urlData.split(',')
+        let arr=[];
+        if (urlData){
+          arr = urlData.split(',')
+        }
         let mime = arr[0].match(/:(.*?);/)[1]
         let bytes = atob(arr[1]) // 解码base64
         let n = bytes.length
@@ -439,6 +465,7 @@
             data.examId = parseInt(this.$route.params.examId)
             data.questionIds = data.questionIds.join(',')
             data.creditImgUrl = this.takePhotoUrl.join(',')
+            data.exitTime = this.exitTime.join(',')
             this.$http.post(this.API.addExamRecord, data).then((resp) => {
               if (resp.data.code === 200) {
                 this.$notify({
@@ -469,6 +496,7 @@
           data.userAnswers = this.userAnswer.join('-')
           data.examId = parseInt(this.$route.params.examId)
           data.creditImgUrl = this.takePhotoUrl.join(',')
+          data.exitTime = this.exitTime.join(',')
           this.questionInfo.forEach((item, index) => {
             data.questionIds.push(item.questionId)
           })
@@ -485,7 +513,8 @@
             }
           })
         }
-      }
+      },
+
     },
     watch: {
       //监控考试的剩余时间

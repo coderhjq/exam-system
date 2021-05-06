@@ -42,17 +42,17 @@ public class Exam implements Serializable {
     @ApiModelProperty(value = "考试时间", example = "125(分钟)")
     private Integer duration;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "考试开始时间", example = "2020-11-01")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "考试开始时间", example = "2020-11-01 15:00:00")
     @TableField(strategy= FieldStrategy.IGNORED)
-    private Date startTime;
+    private String startTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "考试结束时间", example = "2020-12-01")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "考试结束时间", example = "2020-12-01 15:00:00")
     @TableField(strategy= FieldStrategy.IGNORED)
-    private Date endTime;
+    private String endTime;
 
     @ApiModelProperty(value = "考试总分", example = "100")
     private Integer totalScore;

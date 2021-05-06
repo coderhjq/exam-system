@@ -37,7 +37,7 @@
     </el-main>
 
     <el-footer>
-      <span>&copy;2021-202 By HJQ</span>
+      <span>&copy;2021-202 By hjq</span>
       <br>
       <span style="color: blueviolet">1109429602</span>
     </el-footer>

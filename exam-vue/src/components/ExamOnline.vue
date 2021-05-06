@@ -162,8 +162,8 @@
         this.$http.post(this.API.getExamInfo, this.queryInfo).then((resp) => {
           if (resp.data.code === 200) {
             resp.data.data.forEach(item => {
-              item.startTime = String(item.startTime).substring(0, 10)
-              item.endTime = String(item.endTime).substring(0, 10)
+              item.startTime = String(item.startTime)
+              item.endTime = String(item.endTime)
             })
             this.examInfo = resp.data.data
             this.getExamTotal()
@@ -211,21 +211,23 @@
           this.startExamDialog = true
           this.currentSelectedExam = row
         }
-      }
+      },
     },
     computed: {
+
       //检查考试的合法性
       checkExam (row) {
         return (row) => {
-          let date = new Date()
+          // console.log(row);
+          var Dates = new Date();
           if (row.status === 2) return false
           if (row.startTime === 'null' && row.endTime === 'null') {
             return true
           } else if (row.startTime === 'null') {
-            return date < new Date(row.endTime)
+            return Dates < new Date(row.endTime)
           } else if (row.endTime === 'null') {
-            return date > new Date(row.startTime)
-          } else if (date > new Date(row.startTime) && date < new Date(row.endTime)) return true
+            return Dates > new Date(row.startTime)
+          } else if (Dates > new Date(row.startTime) && Dates < new Date(row.endTime)) return true
         }
       }
     }

@@ -1,7 +1,8 @@
 <template>
   <el-container>
     <!--用户头部菜单-->
-    <el-aside id="aside" width="210px">
+
+    <el-aside id="aside" width="210px" >
       <el-menu :default-active="activeMenu" @select="handleSelect" :router="true"
                background-color="rgb(48,65,86)"
                text-color="rgb(191,203,217)"
@@ -41,7 +42,6 @@
         </el-submenu>
       </el-menu>
     </el-aside>
-
     <!--右侧的面板-->
     <el-main>
 
@@ -92,7 +92,7 @@
             <div>
               <el-tag @close="handleClose(index)" v-for="(item,index) in tags"
                       type="info" size="small" :key="index" :class="item.highlight ? 'active' : ''"
-                      :closable="item.name !== '产品介绍'" @click="changeHighlightTag(item.name)"
+                      :closable="item.name !== '系统介绍'" @click="changeHighlightTag(item.name)"
                       effect="plain">
                 <i class="el-icon-s-opportunity" style="margin-right: 2px"
                    v-if="item.highlight"></i>
@@ -101,6 +101,7 @@
             </div>
           </el-card>
         </el-header>
+
 
         <el-main style="margin-top: 25px;">
           <router-view @giveChildChangeBreakInfo="giveChildChangeBreakInfo" @showSystemNotice="showSystemNotice"
@@ -175,15 +176,15 @@
         activeMenu: '',
         //面包屑信息
         breadInfo: {
-          'top': '产品介绍',//顶级菜单信息
-          'sub': '产品介绍'//当前的菜单信息
+          'top': '系统介绍',//顶级菜单信息
+          'sub': '系统介绍'//当前的菜单信息
         },
         //面包屑下的标签数据
         tags: [
           {
-            'name': '产品介绍',
+            'name': '系统介绍',
             'url': '/dashboard',
-            'highlight': true
+            'highlight': false
           }
         ],
         //跟新当前用户的信息的对话框
@@ -216,7 +217,7 @@
     mounted () {
       //根据当前链接的hash设置对应高亮的菜单
       this.activeMenu = window.location.hash.substring(1)
-      document.querySelector('.el-container').style.maxHeight = screen.height + 'px'
+      // document.querySelector('.el-container').style.maxHeight = screen.height + 'px'
       // 根据设备大小调整侧边栏
       if (screen.width <= 1080) {
         this.isCollapse = !this.isCollapse
@@ -520,7 +521,7 @@
 
   .el-container {
     width: 100%;
-    height: 100%;
+    height: 100% ;
 
     .el-menu {
       height: 100% !important;
@@ -589,4 +590,18 @@
     background-color: rgb(66, 185, 131);
     color: white;
   }
+  body .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
+  /**修改全局的滚动条*/
+  /**滚动条的宽度*/
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  /*滚动条的滑块*/
+    ::-webkit-scrollbar-thumb {
+      background-color: #eaecf1;
+      border-radius: 3px;
+    }
 </style>

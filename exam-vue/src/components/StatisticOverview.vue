@@ -1,13 +1,13 @@
 <template>
   <el-container>
     <el-row>
-      <div id="img1" style="width: 800px;height:400px;"></div>
-      <div id="img2" style="width: 800px;height:400px;"></div>
+      <div id="img1"></div>
+      <div id="img2"></div>
     </el-row>
 
     <el-row>
-      <div id="img3" style="width: 800px;height:400px;"></div>
-      <div id="img4" style="width: 800px;height:400px;"></div>
+      <div id="img3"></div>
+      <div id="img4"></div>
     </el-row>
 
   </el-container>
@@ -58,7 +58,7 @@
         myChart.setOption({
           title: {
             text: '考试通过率',
-            subtext: 'dashbord1',
+            // subtext: 'dashbord1',
             x: 'center',
             y: 'top',
             textAlign: 'center'
@@ -97,7 +97,7 @@
         myChart.setOption({
           title: {
             text: '考试次数占比',
-            subtext: 'dashbord2',
+            // subtext: 'dashbord2',
             x: 'center'
           },
           tooltip: {
@@ -215,8 +215,8 @@
 <style scoped lang="scss">
 
   .el-container {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .el-container {
@@ -232,5 +232,10 @@
       transform: translateX(0%);
       opacity: 1;
     }
+  }
+  div{
+    width: 100%;
+    height: 100%;
+    clear: both;
   }
 </style>

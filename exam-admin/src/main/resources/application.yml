@@ -45,3 +45,4 @@ mybatis-plus:
   configuration:
     # 配置日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true

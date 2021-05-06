@@ -4,13 +4,12 @@
       <el-input v-model="queryInfo.bankName" @blur="contentChange" placeholder="题库名称"
                 style="width: 220px"
                 prefix-icon="el-icon-search"></el-input>
-      <br>
-      <el-button type="primary" style="margin-top: 10px" icon="el-icon-plus" @click="addTableVisible = true">添加
+      <el-button type="primary" style="margin-left: 10px" icon="el-icon-plus" @click="addTableVisible = true" >添加
       </el-button>
 
     </el-header>
 
-    <el-main style="margin-top: 20px">
+    <el-main >
 
       <!--操作的下拉框-->
       <el-select @change="operationChange" clearable v-if="selectedTable.length !== 0" v-model="operation"

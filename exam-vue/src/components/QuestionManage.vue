@@ -25,11 +25,9 @@
         <el-input v-model="queryInfo.questionContent" @blur="contentChange" placeholder="题目内容"
                   style="margin-left: 5px;width: 220px"
                   prefix-icon="el-icon-search"></el-input>
+        <el-button type="primary" icon="el-icon-plus" @click="addQuTableVisible = true" style="margin-left: 20px">添加</el-button>
       </el-row>
 
-      <el-row style="margin-top: 10px">
-        <el-button type="primary" icon="el-icon-plus" @click="addQuTableVisible = true">添加</el-button>
-      </el-row>
     </el-header>
 
     <el-main>
@@ -1143,5 +1141,8 @@
   .quContent {
     color: #4d99de;
     cursor: pointer;
+  }
+  .el-row{
+    display: inline;
   }
 </style>

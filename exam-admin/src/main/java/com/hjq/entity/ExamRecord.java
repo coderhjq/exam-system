@@ -34,8 +34,8 @@ public class ExamRecord implements Serializable {
     @ApiModelProperty(value = "考试过程中的信用截图", example = "imgUrl")
     private String creditImgUrl;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "考试时间", example = "2020-10-20")
     private Date examTime;
 
@@ -53,4 +53,8 @@ public class ExamRecord implements Serializable {
 
     @ApiModelProperty(value = "考试错题id", example = "1,2,3")
     private String errorQuestionIds;
+
+    @ApiModelProperty(value = "考试作弊标志 1不作弊 2作弊", example = "1,2")
+    private Integer status;
+
 }
