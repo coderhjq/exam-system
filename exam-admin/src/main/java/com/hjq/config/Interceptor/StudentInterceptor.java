@@ -26,7 +26,7 @@ public class StudentInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //判断用户的token信息是否满足
         TokenVo tokenVo = new CheckToken().checkToken(request, userService);
-        if (tokenVo != null && (Objects.equals(tokenVo.getRoleId(), 3 + "" ) || Objects.equals(tokenVo.getRoleId(), 1 + "" ))){
+        if (tokenVo != null && (Objects.equals(tokenVo.getRoleId(), 2 + "" ) ||Objects.equals(tokenVo.getRoleId(), 3 + "" ) || Objects.equals(tokenVo.getRoleId(), 1 + "" ))){
             return true;
         }
         //当前不满足条件,直接跳转拦截

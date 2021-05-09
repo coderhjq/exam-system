@@ -16,7 +16,8 @@
           总分: {{ examInfo.totalScore }}分</span>
           </el-tooltip>
         </el-row>
-        <el-button @click="creditDialog = true" size="small" style="margin-top: 15px" type="primary">查看诚信截图</el-button>
+        <el-button @click="creditDialog = true;creditDialogs()" size="small" style="margin-top: 15px" type="primary" >查看诚信截图</el-button>
+        <p>切换页面次数:{{switchNum}}</p>
 
       </el-card>
 
@@ -128,7 +129,9 @@
         //单题的分值
         questionScore: new Map(),
         //诚信考试的图片的对话框
-        creditDialog: false
+        creditDialog: false,
+        //切换页面次数
+        switchNum:0,
       }
     },
     props: ['tagInfo'],
@@ -147,6 +150,10 @@
       })
     },
     methods: {
+      creditDialogs(){
+        console.log('sss');
+      },
+
       //向父组件中添加头部的tags标签
       createTagsInParent () {
         let flag = false
@@ -166,7 +173,8 @@
         await this.$http.get(this.API.getExamRecordById + '/' + this.$route.params.recordId).then((resp) => {
           if (resp.data.code === 200) {
             this.examRecord = resp.data.data
-            console.log(resp.data.data)
+            console.log(resp.data.data);
+            this.switchNum = resp.data.data.switchNum;
             this.getExamInfoById(resp.data.data.examId)
             this.userAnswer = resp.data.data.userAnswers.split('-')
             //获取单题的分值
@@ -203,6 +211,7 @@
       },
       //点击展示高清大图
       showBigImg (url) {
+
         this.bigImgUrl = url
         this.bigImgDialog = true
       },

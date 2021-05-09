@@ -277,11 +277,11 @@ public class TeacherController {
     })
     public CommonResult<String> uploadQuestionImage(MultipartFile file) throws Exception {
         log.info("执行了===>TeacherController中的uploadQuestionImage方法");
-        System.out.println ("++++++++++++++++++++++");
-        System.out.println(file.getOriginalFilename());
-        System.out.println ("++++++++++++++++++++++");
+//        System.out.println ("++++++++++++++++++++++");
+//        System.out.println(file.getOriginalFilename());
+//        System.out.println ("++++++++++++++++++++++");
         String url = OSSUtil.picOSS(file);
-        System.out.println (url);
+//        System.out.println (url);
         return new CommonResult<>(200, "上传成功", url);
     }
 
@@ -783,10 +783,10 @@ public class TeacherController {
 
         List<Exam> exams = page.getRecords();
 
-        for (Exam exam : exams) {
-            System.out.println (exam.getEndTime ());
-            System.out.println (exam.getStartTime ());
-        }
+//        for (Exam exam : exams) {
+//            System.out.println (exam.getEndTime ());
+//            System.out.println (exam.getStartTime ());
+//        }
 
         return new CommonResult<>(200, "查询考试信息成功", exams);
     }
@@ -914,6 +914,19 @@ public class TeacherController {
         //设置总成绩
         exam.setTotalScore(totalScore);
 
+        //设置文件
+        String key = "teacher" + String.valueOf (addExamByBankVo.getTeacherId ());
+        String url = (String) redisUtil.get (key);
+
+        exam.setFileUrl (url);
+//        System.out.println ("----------------------------------");
+//        System.out.println (url);
+//        System.out.println ("----------------------------------");
+
+        //删除缓存
+        redisUtil.del (key);
+
+        //保存
         examService.save(exam);
         examQuestionService.save(examQuestion);
         return new CommonResult<>(200, "考试创建成功");
@@ -965,11 +978,23 @@ public class TeacherController {
         examQuestion.setExamId(id);
         examQuestion.setScores(addExamByQuestionVo.getScores());
         examQuestion.setQuestionIds(addExamByQuestionVo.getQuestionIds());
+//
+//        System.out.println ("-------------");
+//        System.out.println (exam.getStartTime ());
+//        System.out.println (exam.getEndTime ());
+//        System.out.println ("-------------");
 
-        System.out.println ("-------------");
-        System.out.println (exam.getStartTime ());
-        System.out.println (exam.getEndTime ());
-        System.out.println ("-------------");
+        //设置文件
+        String key = "teacher" + String.valueOf (addExamByQuestionVo.getTeacherId ());
+        String url = (String) redisUtil.get (key);
+
+        exam.setFileUrl (url);
+//        System.out.println ("----------------------------------");
+//        System.out.println (url);
+//        System.out.println ("----------------------------------");
+
+        //删除缓存
+        redisUtil.del (key);
 
         examService.save(exam);
         examQuestionService.save(examQuestion);
@@ -977,7 +1002,8 @@ public class TeacherController {
     }
 
     /**
-     * @param examId 考试id
+     *
+     * @param examId
      * @return
      */
     @GetMapping("/getExamInfoById")
@@ -987,6 +1013,7 @@ public class TeacherController {
     })
     public CommonResult<Object> getExamInfoById(@RequestParam Integer examId) {
         log.info("执行了===>TeacherController中的getExamInfoById方法");
+        // 查询用户考试记录是否重复考试
         if (redisUtil.get("examInfo:" + examId) != null) {
             return new CommonResult<>(200, "查询成功", redisUtil.get("examInfo:" + examId));
         } else {
@@ -1004,7 +1031,11 @@ public class TeacherController {
             addExamByQuestionVo.setType(exam.getType());
             addExamByQuestionVo.setPassword(exam.getPassword());
             addExamByQuestionVo.setStatus(exam.getStatus());
+//            System.out.println ("----------------------------------");
+//            System.out.println (exam.getFileUrl ());
+//            System.out.println ("----------------------------------");
 
+            addExamByQuestionVo.setFileurl (exam.getFileUrl ());
             //考试中题目的对象
             ExamQuestion examQuestion = examQuestionService.getOne(new QueryWrapper<ExamQuestion>().eq("exam_id", examId));
             addExamByQuestionVo.setQuestionIds(examQuestion.getQuestionIds());
@@ -1081,7 +1112,6 @@ public class TeacherController {
             id = examRecords.get(examRecords.size() - 1).getRecordId() + 1;
         }
         examRecord.setRecordId(id);
-
         //设置逻辑题目的分数
         //查询所有的题目答案信息
         List<Answer> answers = answerService.list(new QueryWrapper<Answer>().in("question_id", Arrays.asList(examRecord.getQuestionIds().split(","))));
@@ -1119,6 +1149,13 @@ public class TeacherController {
         System.out.println(examRecord);
         examRecord.setExamTime(new Date());
         examRecord.setStatus (1);
+        String url = examRecord.getCreditImgUrl ().substring (0, (examRecord.getCreditImgUrl ().length ()-1));
+        examRecord.setCreditImgUrl (url);
+//        System.out.println ("++++++++++++++++++++++++++++++++__________________");
+//        System.out.println (examRecord);
+//        System.out.println (url);
+//        System.out.println ("++++++++++++++++++++++++++++++++__________________");
+
         examRecordService.save(examRecord);
         return new CommonResult<>(200, "考试记录保存成功", id);
     }
@@ -1139,6 +1176,9 @@ public class TeacherController {
         } else {
             ExamRecord examRecord = examRecordService.getOne(new QueryWrapper<ExamRecord>().eq("record_id", recordId));
             redisUtil.set("examRecord:" + recordId, examRecord, 60 * 5 + new Random().nextInt(2) * 60);
+//            System.out.println ("+++++++++++++______________");
+//            System.out.println (examRecord.getSwitchNum ());
+//            System.out.println ("+++++++++++++______________");
             return new CommonResult<>(200, "考试信息查询成功", examRecord);
         }
     }
@@ -1323,8 +1363,8 @@ public class TeacherController {
     })
     public CommonResult<List<String>> updateStatus(@RequestBody Map<String, Integer> data){
         Integer recordId = data.get ("recordId");
-        System.out.println ("------------");
-        System.out.println (recordId);
+//        System.out.println ("------------");
+//        System.out.println (recordId);
         ExamRecord record = examRecordService.getOne(new QueryWrapper<ExamRecord>().eq("record_id", recordId));
         if (2 == record.getStatus ()){
             return new CommonResult<> (200, "已设置，请勿重复点击");
@@ -1334,5 +1374,53 @@ public class TeacherController {
         examRecordService.update (record, new UpdateWrapper<ExamRecord>().eq("record_id", record.getRecordId ()));
         //examService.update(exam, new UpdateWrapper<Exam>().eq("exam_id", exam.getExamId()));
         return new CommonResult<> (200, "设置成功");
+    }
+
+
+    /**
+     *
+     * @param file
+     * @param request
+     * @return
+     */
+    @PostMapping("/uploadFile")
+    @ApiOperation("上传文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "文件", required = true, dataType = "MultipartFile", paramType = "query"),
+            @ApiImplicitParam(name = "request", value = "request", required = true, dataType = "HttpServletRequest", paramType = "query")
+    })
+    public CommonResult<List<String>> uploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
+        String teacherId = request.getParameter ("teacherId");
+        if (file != null){
+            String url = OSSUtil.picOSS(file);
+            redisUtil.set ("teacher"+teacherId, url);
+            return new CommonResult<> (200, "上传成功！");
+        }
+        return new CommonResult<> (400, "文件为空！");
+    }
+
+
+    /**
+     *
+     * @param data
+     * @return
+     */
+    @PostMapping("/modify")
+    @ApiOperation("判断是否考试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "recordId", value = "考试记录id", required = true, dataType = "int", paramType = "query")
+    })
+    public CommonResult<List<String>> modify(@RequestBody Map<String, Integer> data){
+        Integer examId = data.get ("examId");
+        Integer userId = data.get ("userId");
+        System.out.println ("+++++++++++++______________");
+        System.out.println (examId);
+        System.out.println (userId);
+        System.out.println ("+++++++++++++______________");
+        ExamRecord examRecord = examRecordService.getOne (new QueryWrapper<ExamRecord> ().eq ("user_id", userId).eq ("exam_id", examId));
+        if (examRecord != null){
+            return new CommonResult<>(400, "请勿重复考试");
+        }
+        return new CommonResult<>(200, "成功");
     }
 }

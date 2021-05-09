@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Date;
 
 /**
@@ -56,5 +57,8 @@ public class ExamRecord implements Serializable {
 
     @ApiModelProperty(value = "考试作弊标志 1不作弊 2作弊", example = "1,2")
     private Integer status;
+
+    @ApiModelProperty(value = "切换页面次数", example = "0")
+    private Integer switchNum;
 
 }

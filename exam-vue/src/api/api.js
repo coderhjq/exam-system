@@ -105,6 +105,10 @@ let API = {
     getCertificate: '/student/getCertificate',
     //判断作弊
     updateStatus: '/teacher/updateStatus',
+    //上传听力
+    uploadFile: '/teacher/uploadFile',
+    //重复考试判断
+    modify: '/teacher/modify',
   },
 }
 

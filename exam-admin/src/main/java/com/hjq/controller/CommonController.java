@@ -25,10 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Date 2020/10/20 8:50
@@ -117,7 +114,7 @@ public class CommonController {
             @ApiImplicitParam(name = "username", value = "系统用户唯一用户名", required = true, dataType = "string", paramType = "body"),
             @ApiImplicitParam(name = "password", value = "系统用户密码", required = true, dataType = "string", paramType = "body"),
     })
-    public CommonResult<String> login(@RequestParam(value = "username") String username,
+    public CommonResult<? extends Object> login(@RequestParam(value = "username") String username,
                                       @RequestParam(value = "password") String password) throws NoSuchAlgorithmException {
         log.info("执行了===>CommonController中的login方法");
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -129,7 +126,11 @@ public class CommonController {
             if (newPwd.equals(user.getPassword()) && user.getStatus() == 1) {
                 //发放token令牌
                 String token = TokenUtils.createToken(new TokenVo(user.getRoleId() + "", user.getUsername(), newPwd));
-                return new CommonResult<>(200, "success", token);
+                Map<String, String> map = new HashMap<> ();
+                map.put ("token", token);
+                map.put ("teacherId", String.valueOf (user.getId ()));
+                return new CommonResult<Map> (200, "success", map);
+
             } else {//密码错误 或者 账号封禁
                 return new CommonResult<>(233, "账号密码错误,或用户状态异常");
             }

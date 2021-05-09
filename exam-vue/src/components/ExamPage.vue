@@ -28,7 +28,7 @@
                 <span v-else-if="questionInfo[curIndex].questionType === 3">【判断题】</span>
                 <span v-else>【简答题】</span>
                 <span>{{ questionInfo[curIndex].questionContent}}:</span>
-<!--                <audio ref="audio" :src="file_path" controls="controls" hidden id="myAudio"></audio>-->
+                <audio ref="audio" :src="file_path" controls="controls" hidden id="myAudio"></audio>
 <!--                <button id="bf" @click="play()">播放听力</button>-->
               </div>
               <!--题目中的配图-->
@@ -193,11 +193,15 @@
         //摄像头对象
         mediaStreamTrack: null,
         //诚信照片的url
-        takePhotoUrl: [],
+        takePhotoUrl: '',
         //摄像头是否开启
         cameraOn: false,
         //跳出页面次数
-        exitTime: 0,
+        // switchNums: 0,
+        //定时器
+        timer: '',
+        //听力路径
+        file_path:''
       }
     },
     created () {
@@ -254,32 +258,37 @@
           }
         }
       }
-      let exitTime=0;
+      let switchNum=0;
       document.addEventListener('visibilitychange',function(e){
-        // console.log(document.visibilityState);
         let state = document.visibilityState
         if(state == 'hidden'){
           console.log(document.visibilityState,'用户离开了');
-          exitTime++;
-          this.exitTime=exitTime;
+          switchNum++;
+          sessionStorage.setItem('switchNums', switchNum)
+          let switchNums=sessionStorage.getItem('switchNums')
+
+          // this.switchNums=switchNum;
+          console.log(switchNums);
         }
         if(state == 'visible'){
           console.log(document.visibilityState,'回来了');
         }
       })
-
+      this.timer=setTimeout(this.hearing,10000);
     },
     methods: {
-      // play(){
-      //     var vid = document.getElementById("myAudio");//获取音频对象
-      //     document.getElementById("bf").disabled = true;;
-      //     vid.play();//启动音频，用于第一次启动
-      // },
+      hearing(){
+         let vid = document.getElementById("myAudio");//获取音频对象
+         vid.play();//启动音频，用于第一次启动
+      },
       //查询当前考试的信息
       getExamInfo () {
-        this.$http.get(this.API.getExamInfoById, { params: this.$route.params }).then((resp) => {
+        let teacherId=sessionStorage.getItem('teacherId');
+        this.$http.get(this.API.getExamInfoById, { params:  this.$route.params }).then((resp) => {
+          console.log(resp)
           if (resp.data.code === 200) {
             this.examInfo = resp.data.data
+            this.file_path = resp.data.data.fileurl
             //设置定时(秒)
             if (localStorage.getItem('examDuration' + this.examInfo.examId) === '0') localStorage.removeItem('examDuration' + this.examInfo.examId)
             this.duration = localStorage.getItem('examDuration' + this.examInfo.examId) || resp.data.data.examDuration * 60
@@ -379,14 +388,20 @@
           ctx.drawImage(video, 0, 0, 200, 200)
           // toDataURL  ---  可传入'image/png'---默认, 'image/jpeg'
           let img = document.getElementById('canvas').toDataURL()
-
+          let str=""
           //构造post的form表单
           let formData = new FormData()
           //convertBase64UrlToBlob函数是将base64编码转换为Blob
           formData.append('file', this.base64ToFile(img, 'examTakePhoto.png'))
           //上传阿里云OSS
           this.$http.post(this.API.uploadQuestionImage, formData).then((resp) => {
-            if (resp.data.code === 200) this.takePhotoUrl.push(resp.data.data)
+            console.log(resp.data.data)
+            if (resp.data.code === 200){
+                str += resp.data.data + ","
+            }
+              console.log(str)
+              // this.takePhotoUrl = this.takePhotoUrl + "," + resp.data.data
+            sessionStorage.setItem('photos',str)
           })
         }
       },
@@ -448,6 +463,7 @@
             let data = {}
             data.questionIds = []
             data.userAnswers = this.userAnswer.join('-')
+            // data.switchNum = this.switchNums.join('-')
             this.questionInfo.forEach((item, index) => {
               data.questionIds.push(item.questionId)
               //当前数据不完整,用户回答不完整(我们自动补充空答案,防止业务出错)
@@ -465,7 +481,10 @@
             data.examId = parseInt(this.$route.params.examId)
             data.questionIds = data.questionIds.join(',')
             data.creditImgUrl = this.takePhotoUrl.join(',')
-            data.exitTime = this.exitTime.join(',')
+            let switchNums=sessionStorage.getItem('switchNums')
+            console.log(switchNums);
+            data.switchNum =switchNums;
+            console.log(data);
             this.$http.post(this.API.addExamRecord, data).then((resp) => {
               if (resp.data.code === 200) {
                 this.$notify({
@@ -491,12 +510,21 @@
             this.takePhoto()
             this.closeCamera()
           }
+
           let data = {}
+          let switchNums=sessionStorage.getItem('switchNums')
           data.questionIds = []
           data.userAnswers = this.userAnswer.join('-')
           data.examId = parseInt(this.$route.params.examId)
-          data.creditImgUrl = this.takePhotoUrl.join(',')
-          data.exitTime = this.exitTime.join(',')
+
+          let pics=sessionStorage.getItem('photos')
+          console.log(pics);
+          // console.log(this.takePhotoUrl);
+
+          data.creditImgUrl = pics;
+
+          data.switchNum = switchNums
+          console.log(data);
           this.questionInfo.forEach((item, index) => {
             data.questionIds.push(item.questionId)
           })
@@ -577,6 +605,9 @@
           })
         }
       },
+    },
+    beforeDestroy(){
+      clearTimeout(this.timer);
     }
   }
 </script>

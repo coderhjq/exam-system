@@ -256,6 +256,7 @@
       //查看系统公告
       showSystemNotice () {
         this.$http.get(this.API.getCurrentNewNotice).then((resp) => {
+          console.log(resp.data)
           if (resp.data.code === 200) {
             this.$alert(resp.data.data, '最新公告', {
               dangerouslyUseHTMLString: true,
@@ -381,6 +382,7 @@
       async getUserInfoByCheckToken () {
         const resp = await this.$http.get(this.API.checkToken)
         this.currentUserInfo = resp.data.data
+        console.log(resp.data.data);
         localStorage.setItem('username', this.currentUserInfo.username)
       },
       //关闭tag标签

@@ -119,7 +119,10 @@
             //发送登录请求
             this.$http.post(this.API.login, data).then((resp) => {
               if (resp.data.code === 200) {
-                localStorage.setItem('authorization', resp.data.data)
+                localStorage.setItem('authorization', resp.data.data.token)
+                console.log(resp);
+                sessionStorage.setItem('teacherId',resp.data.data.teacherId)
+                console.log(resp.data.data.teacherId);
                 this.$notify({
                   title: 'Tips',
                   message: '登陆成功^_^',

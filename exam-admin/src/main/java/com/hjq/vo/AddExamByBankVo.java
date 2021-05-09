@@ -16,6 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddExamByBankVo {
+    private Integer teacherId;
     private String bankNames;
     private Integer examDuration;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

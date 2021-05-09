@@ -106,7 +106,8 @@
 
       <span slot="footer" class="dialog-footer">
     <el-button @click="startExamDialog = false">返 回</el-button>
-    <el-button type="primary" @click="$router.push('/exam/'+ currentSelectedExam.examId)">开始考试</el-button>
+<!--    <el-button type="primary" @click="$router.push('/exam/'+ currentSelectedExam.examId)">开始考试</el-button>-->
+    <el-button type="primary" @click="modifyTest">开始考试</el-button>
   </span>
     </el-dialog>
   </el-container>
@@ -152,6 +153,30 @@
       this.getExamInfo()
     },
     methods: {
+      modifyTest(){
+        let data={}
+        let userId=parseInt(sessionStorage.getItem("teacherId"));
+        console.log(userId)
+        console.log(this.currentSelectedExam.examId)
+        data.examId=this.currentSelectedExam.examId;
+        data.userId=userId
+
+        console.log(data)
+        this.$http.post(this.API.modify, data).then((resp) => {
+          if (resp.data.code === 200) {
+            // this.$router.push('/examResult/' + resp.data.data)
+            this.$router.push('/exam/'+ this.currentSelectedExam.examId)
+          }else {
+            this.$notify({
+              title: 'Tips',
+              message: '请勿重复考试',
+              type: 'error',
+              duration: 2000
+            })
+          }
+        })
+      },
+
       //考试类型搜索
       typeChange (val) {
         this.queryInfo.examType = val
@@ -171,7 +196,7 @@
           }
         })
       },
-      //查询考试信息
+      //查询考试总数
       getExamTotal () {
         let data = JSON.parse(JSON.stringify(this.queryInfo))
         data.pageNo = 1
@@ -194,6 +219,7 @@
       },
       //去考试准备页面
       toStartExam (row) {
+
         if (row.type === 2) {
           this.$prompt('请提供考试密码', 'Tips', {
             confirmButtonText: '确定',

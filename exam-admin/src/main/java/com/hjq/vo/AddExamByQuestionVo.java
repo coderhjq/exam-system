@@ -35,4 +35,7 @@ public class AddExamByQuestionVo {
     private String questionIds;
     private Integer examId;
     private String scores;
+    private String fileurl;
+    private Integer teacherId;
+
 }

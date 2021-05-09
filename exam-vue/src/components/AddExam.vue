@@ -188,6 +188,24 @@
             </el-date-picker>
           </el-form-item>
 
+          <el-form-item>
+            <el-upload
+              class="upload-demo"
+              drag
+              action="123"
+              :before-upload="beforeUpload"
+              multiple
+              ref="newupload"
+              :auto-upload="false"
+              accept=".mp3"
+              :on-change="handleChange"
+            >
+            <el-button type="primary" slot="trigger">选取文件</el-button>
+              <el-button type="primary"  @click="newSubmitForm">上传文件</el-button>
+            </el-upload>
+
+          </el-form-item>
+
         </el-form>
 
       </el-card>
@@ -357,7 +375,8 @@
           'passScore': 0,
           'examDuration': '',
           'startTime': '',
-          'endTime': ''
+          'endTime': '',
+          'teacherId': ''
         },
         //补充的考试信息的表单验证
         examInfoRules: {
@@ -383,6 +402,7 @@
             }
           ],
         },
+        fileList:[],
       }
     },
     props: ['tagInfo'],
@@ -393,6 +413,29 @@
       this.getBankInfo()
     },
     methods: {
+      beforeUpload(file){
+        let teacherId = sessionStorage.getItem("teacherId");
+        // console.log(teacherId);
+        let formData = new FormData()
+        // console.log(file);
+        formData.append('file', file)
+        formData.append('teacherId',teacherId)
+        //上传阿里云OSS
+        this.$http.post(this.API.uploadFile, formData).then((resp) => {
+          console.log(resp)
+          if (resp.data.code === 200)
+            console.log(resp)
+        })
+      },
+      newSubmitForm () {
+              this.$refs.newupload.submit()
+      },
+      //上传文件让第二次覆盖第一的文件
+      handleChange(file,fileList){
+        if (fileList.length>0) {
+          this.fileList=[fileList[fileList.length-1]]
+        }
+      },
       //向父组件中添加头部的tags标签
       createTagsInParent () {
         let flag = false
@@ -542,7 +585,10 @@
             }
             //题库组卷模式
             if (this.makeModel === 1 && !this.addExamQuestion.some(item => item.bankId === '')) {
-              console.log(this.addExamQuestion)
+              let teacherId = sessionStorage.getItem("teacherId");
+              console.log(teacherId);
+              // console.log(this.addExamQuestion)
+              // this.teacherId=teacherId;
               let bankNames = []
               this.addExamQuestion.forEach(item => bankNames.push(item.bankName))
               exam.bankNames = bankNames.join(',')
@@ -550,6 +596,8 @@
               exam.multipleScore = this.addExamQuestion[0].multipleScore
               exam.judgeScore = this.addExamQuestion[0].judgeScore
               exam.shortScore = this.addExamQuestion[0].shortScore
+              exam.teacherId = teacherId
+              console.log(exam);
               this.$http.post(this.API.addExamByBank, exam).then((resp) => {
                 if (resp.data.code === 200) this.$router.push('/examManage')
               })
@@ -564,6 +612,7 @@
               })
               exam.questionIds = questionIds.join(',')
               exam.scores = scores.join(',')
+              exam.fileList = this.fileList;
               console.log(exam)
               this.$http.post(this.API.addExamByQuestionList, exam).then((resp) => {
                 if (resp.data.code === 200) this.$router.push('/examManage')
@@ -577,6 +626,7 @@
           }
         })
       }
+
     },
     computed: {
       //计算总分
@@ -591,6 +641,7 @@
       }
     }
   }
+
 </script>
 
 <style scoped lang="scss">
