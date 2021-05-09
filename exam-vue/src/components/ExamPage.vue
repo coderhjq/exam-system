@@ -388,7 +388,7 @@
           ctx.drawImage(video, 0, 0, 200, 200)
           // toDataURL  ---  可传入'image/png'---默认, 'image/jpeg'
           let img = document.getElementById('canvas').toDataURL()
-          let str=""
+          // let str=""
           //构造post的form表单
           let formData = new FormData()
           //convertBase64UrlToBlob函数是将base64编码转换为Blob
@@ -397,11 +397,16 @@
           this.$http.post(this.API.uploadQuestionImage, formData).then((resp) => {
             console.log(resp.data.data)
             if (resp.data.code === 200){
+              if(sessionStorage.getItem("photos")!=null){
+                let str=sessionStorage.getItem("photos");
                 str += resp.data.data + ","
+                sessionStorage.setItem("photos",str);
+                console.log(str);
+              }else{
+                this.takePhotoUrl = resp.data.data + ","
+              }
+
             }
-              console.log(str)
-              // this.takePhotoUrl = this.takePhotoUrl + "," + resp.data.data
-            sessionStorage.setItem('photos',str)
           })
         }
       },
